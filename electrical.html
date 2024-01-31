@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="container">
+        <img src="Logo.png">
+
+        <div class="navbar">
+            <a href="length.html">Length</a>
+            <a href="mass.html">Mass</a>
+            <a href="temperature.html">Temperature</a>
+            <a href="volume.html">Volume</a>
+            <a href="electrical.html" class="active">Electrical</a>
+        </div>
+        
+        <div class="input-group">
+            <label for="unitInput" class="fa">&#xf1da;</label> 
+            <input type="number" id="unitInput" placeholder="Enter value">
+        </div>
+        <div class="input-group">
+            <select id="inputUnitSelect">
+                <option value="giga">Giga (G)</option>
+                <option value="mega">Mega (M)</option>
+                <option value="kilo">Kilo (K)</option>
+                <option value="hecto">Hecto (h)</option>
+                <option value="deca">Deca (da)</option>
+                <option value="deci">Deci (d)</option>
+                <option value="centi">Centi (c)</option>
+                <option value="milli">Milli (m)</option>
+                <option value="micro">Micro (μ)</option>
+                <option value="nano">Nano (n)</option>
+                <option value="pico">Pico (p)</option>
+            </select>
+        </div>
+        
+        <div class="button-group">
+            <button onclick="convert()">Convert</button>
+            <p onclick="toggleDirection()">&#8651;</p>
+        </div>
+
+        <div class="result">
+            <p id="resultText"></p>
+        </div>
+        <div class="input-group">
+            <select id="outputUnitSelect">
+                <option value="giga">Giga (G)</option>
+                <option value="mega">Mega (M)</option>
+                <option value="kilo">Kilo (K)</option>
+                <option value="hecto">Hecto (h)</option>
+                <option value="deca">Deca (da)</option>
+                <option value="deci">Deci (d)</option>
+                <option value="centi">Centi (c)</option>
+                <option value="milli">Milli (m)</option>
+                <option value="micro">Micro (μ)</option>
+                <option value="nano">Nano (n)</option>
+                <option value="pico">Pico (p)</option>
+            </select>
+        </div>
+    </div>
+    <script src="electricalScript.js"></script>
+</body>
+</html>

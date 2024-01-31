@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="container">
+        <img src="Logo.png">
+
+        <div class="navbar">
+            <a href="length.html">Length</a>
+            <a href="mass.html">Mass</a>
+            <a href="temperature.html">Temperature</a>
+            <a href="volume.html" class="active">Volume</a>
+            <a href="electrical.html">Electrical</a>
+        </div>
+        
+        <div class="input-group">
+            <label for="unitInput" class="fa">&#xf1da;</label> 
+            <input type="number" id="unitInput" placeholder="Enter volume">
+        </div>
+        <div class="input-group">
+            <select id="inputUnitSelect">
+                <option value="cubicMeter">Cubic Meter (m³)</option>
+                <option value="cubicFoot">Cubic Foot (ft³)</option>
+                <option value="liter">Liter (L)</option>
+                <option value="milliliter">Milliliter (mL)</option>
+                <option value="gallon">Gallon (gal)</option>
+                <option value="quart">Quart (qt)</option>
+                <option value="pint">Pint (pt)</option>
+                <option value="cup">Cup (cup)</option>
+                <option value="barrel">Barrel (bbl)</option>
+                <option value="teaspoon">Teaspoon (tsp)</option>
+                <option value="tablespoon">Tablespoon (tbsp)</option>
+            </select>
+        </div>
+        
+        <div class="button-group">
+            <button onclick="convert()">Convert</button>
+            <p onclick="toggleDirection()">&#8651;</p>
+        </div>
+
+        <div class="result">
+            <p id="resultText"></p>
+        </div>
+        <div class="input-group">
+            <select id="outputUnitSelect">
+                <option value="cubicMeter">Cubic Meter (m³)</option>
+                <option value="cubicFoot">Cubic Foot (ft³)</option>
+                <option value="liter">Liter (L)</option>
+                <option value="milliliter">Milliliter (mL)</option>
+                <option value="gallon">Gallon (gal)</option>
+                <option value="quart">Quart (qt)</option>
+                <option value="pint">Pint (pt)</option>
+                <option value="cup">Cup (cup)</option>
+                <option value="barrel">Barrel (bbl)</option>
+                <option value="teaspoon">Teaspoon (tsp)</option>
+                <option value="tablespoon">Tablespoon (tbsp)</option>
+            </select>
+        </div>
+    </div>
+    <script src="volumeScript.js"></script>
+</body>
+</html>
