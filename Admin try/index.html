@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+    .container {
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        border-radius: 10px;
+    }
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .current-stats {
+        display: flex;
+        justify-content: space-between;
+        margin-right: 20%;
+        margin-left: 20%;
+    }
+    .stat-box {
+        width: 150px;
+        height: 150px;
+        background-color: #ffd700; /* Golden */
+        border-radius: 10px;
+        padding: 10px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .stat-value {
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 10px;
+        color: #333; /* Dark Grey */
+    }
+    .user-dropdown {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    }
+
+    #searchInput {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-left: auto; /* Pushes the search input to the right */
+        max-width: 300px;
+    }
+
+    #searchInput:focus {
+        outline: none;
+        border-color: #007bff; /* Highlight border color on focus */
+    }
+
+    #searchInput::placeholder {
+        color: #999; /* Placeholder color */
+    }
+    #userSelect {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 100%;
+        max-width: 300px;
+    }
+    #userSelect option {
+        padding: 10px;
+    }
+    .user-details {
+        margin-bottom: 20px;
+    }
+    .user-details table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .user-details th, .user-details td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+        width: 20%; /* Equal width for each cell */
+    }
+    .user-details th {
+        background-color: #f2f2f2;
+    }
+    .delete-button {
+        background-color: #ff6347;
+        color: #fff;
+        border: none;
+        padding: 8px 12px;
+        cursor: pointer;
+    }
+    .delete-button:hover {
+        background-color: #cc4c39;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Admin Dashboard</h1>
+    </div>
+    <div class="current-stats">
+        <div class="stat-box">
+            <h2>Number of Visitors</h2>
+            <div class="stat-value" id="currentVisitors">0</div>
+        </div>
+        <div class="stat-box" style="background-color: #87ceeb;"> <!-- Sky Blue -->
+            <h2>Number of Conversions</h2>
+            <div class="stat-value" id="conversions">0</div>
+        </div>
+    </div>
+    <div class="user-dropdown">
+        <label for="userSelect">Select User:</label>
+        <select id="userSelect" onchange="showUserDetails()">
+            <option value="">--Select User--</option>
+            <option value="all">Show All Users</option>
+            <!-- Populate with user options -->
+        </select>
+        <input type="text" id="searchInput" oninput="searchUsers()" placeholder="Search...">
+    </div>
+    <div class="user-details" id="userDetails">
+        <!-- User details will be displayed here -->
+    </div>
+</div>
+
+<script>
+    // Dummy data for users
+    const users = [
+        { id: 1, name: "John Doe", email: "john@example.com", conversions: 5 },
+        { id: 2, name: "Jane Smith", email: "jane@example.com", conversions: 3 },
+        // Add more users as needed
+    ];
+
+    // Function to populate user dropdown
+    function populateUserDropdown() {
+        const userSelect = document.getElementById("userSelect");
+        users.forEach(user => {
+            const option = document.createElement("option");
+            option.value = user.id;
+            option.textContent = user.name;
+            userSelect.appendChild(option);
+        });
+    }
+
+    // Function to show user details
+    function showUserDetails() {
+        const selectedValue = document.getElementById("userSelect").value;
+        const userDetailsContainer = document.getElementById("userDetails");
+        userDetailsContainer.innerHTML = ""; // Clear previous content
+
+        if (selectedValue === "all") {
+            const table = document.createElement("table");
+            const tbody = document.createElement("tbody");
+            const headers = ["ID", "Name", "Email", "Conversions", "Actions"];
+            const headerRow = document.createElement("tr");
+            headers.forEach(header => {
+                const th = document.createElement("th");
+                th.textContent = header;
+                headerRow.appendChild(th);
+            });
+            tbody.appendChild(headerRow);
+
+            users.forEach(user => {
+                const dataRow = document.createElement("tr");
+                Object.values(user).forEach(value => {
+                    const td = document.createElement("td");
+                    td.textContent = value;
+                    dataRow.appendChild(td);
+                });
+                const deleteButtonCell = document.createElement("td");
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.className = "delete-button";
+                deleteButton.onclick = function() {
+                    // Add delete functionality here
+                    alert("Delete user with ID: " + user.id);
+                };
+                deleteButtonCell.appendChild(deleteButton);
+                dataRow.appendChild(deleteButtonCell);
+                tbody.appendChild(dataRow);
+            });
+
+            table.appendChild(tbody);
+            userDetailsContainer.appendChild(table);
+        } else {
+            const userId = selectedValue;
+            if (userId) {
+                const user = users.find(u => u.id == userId);
+                const table = document.createElement("table");
+                const tbody = document.createElement("tbody");
+                const headers = ["ID", "Name", "Email", "Conversions", "Actions"];
+                const row = document.createElement("tr");
+                headers.forEach(header => {
+                    const th = document.createElement("th");
+                    th.textContent = header;
+                    row.appendChild(th);
+                });
+                tbody.appendChild(row);
+                const dataRow = document.createElement("tr");
+                Object.values(user).forEach(value => {
+                    const td = document.createElement("td");
+                    td.textContent = value;
+                    dataRow.appendChild(td);
+                });
+                const deleteButtonCell = document.createElement("td");
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.className = "delete-button";
+                deleteButton.onclick = function() {
+                    // Add delete functionality here
+                    alert("Delete user with ID: " + userId);
+                };
+                deleteButtonCell.appendChild(deleteButton);
+                dataRow.appendChild(deleteButtonCell);
+                tbody.appendChild(dataRow);
+                table.appendChild(tbody);
+                userDetailsContainer.appendChild(table);
+            }
+        }
+    }
+
+    function searchUsers() {
+        const searchInput = document.getElementById("searchInput").value.toLowerCase();
+        const userDetailsContainer = document.getElementById("userDetails");
+        userDetailsContainer.innerHTML = ""; // Clear previous content
+
+        if (searchInput.trim() === "") {
+            // If the search input is empty, show the default option
+            showUserDetails();
+            return;
+        }
+
+        const filteredUsers = users.filter(user => 
+            user.name.toLowerCase().includes(searchInput) ||
+            user.email.toLowerCase().includes(searchInput) ||
+            String(user.id).toLowerCase().includes(searchInput) ||
+            String(user.conversions).toLowerCase().includes(searchInput)
+        );
+
+        const table = document.createElement("table");
+        const tbody = document.createElement("tbody");
+        const headers = ["ID", "Name", "Email", "Conversions", "Actions"];
+        const headerRow = document.createElement("tr");
+        headers.forEach(header => {
+            const th = document.createElement("th");
+            th.textContent = header;
+            headerRow.appendChild(th);
+        });
+        tbody.appendChild(headerRow);
+
+        filteredUsers.forEach(user => {
+            const dataRow = document.createElement("tr");
+            Object.values(user).forEach(value => {
+                const td = document.createElement("td");
+                td.textContent = value;
+                dataRow.appendChild(td);
+            });
+            const deleteButtonCell = document.createElement("td");
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.className = "delete-button";
+            deleteButton.onclick = function() {
+                // Add delete functionality here
+                alert("Delete user with ID: " + user.id);
+            };
+            deleteButtonCell.appendChild(deleteButton);
+            dataRow.appendChild(deleteButtonCell);
+            tbody.appendChild(dataRow);
+        });
+
+        table.appendChild(tbody);
+        userDetailsContainer.appendChild(table);
+    }
+
+    // Dummy function to update stats (can be replaced with actual implementation)
+    function updateStats() {
+        document.getElementById("currentVisitors").textContent = Math.floor(Math.random() * 100); // Update with actual data
+        document.getElementById("conversions").textContent = Math.floor(Math.random() * 10); // Update with actual data
+    }
+
+    // Populate user dropdown on page load
+    window.onload = function() {
+        populateUserDropdown();
+    };
+
+    // Update stats every 5 seconds (for demo purposes)
+    setInterval(updateStats, 5000);
+</script>
+</body>
+</html>
